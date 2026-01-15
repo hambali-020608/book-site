@@ -9,7 +9,7 @@ export default function Navbar() {
         </div>
         <div className="flex-none hidden md:block">
           <ul className="menu menu-horizontal px-1 gap-2 font-medium text-base-content/80">
-            <li><a className="hover:text-[#FFBF00] hover:bg-transparent focus:bg-transparent active:bg-transparent transition-colors">Home</a></li>
+            <li><a href="/" className="hover:text-[#FFBF00] hover:bg-transparent focus:bg-transparent active:bg-transparent transition-colors">Home</a></li>
             <li><a className="hover:text-[#FFBF00] hover:bg-transparent focus:bg-transparent active:bg-transparent transition-colors">Library</a></li>
             <li><a className="hover:text-[#FFBF00] hover:bg-transparent focus:bg-transparent active:bg-transparent transition-colors">Categories</a></li>
           </ul>

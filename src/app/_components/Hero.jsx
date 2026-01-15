@@ -1,4 +1,11 @@
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+
 export default function Hero() {
+ 
+  const router = useRouter()
+  const [search,setSearch] = useState("")
+
   return (
     <div className="hero bg-base-200 min-h-screen font-sans">
       <div className="hero-content flex-col lg:flex-row-reverse gap-10 lg:gap-20 max-w-7xl px-6 lg:px-8">
@@ -34,9 +41,9 @@ export default function Hero() {
                     <path d="m21 21-4.3-4.3"></path>
                   </g>
                 </svg>
-                <input type="search" className="grow placeholder:text-base-content/40" placeholder="Search Books..." required />
+                <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} className="grow placeholder:text-base-content/40" placeholder="Search Books..." required />
               </label>
-              <button className="btn bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none join-item rounded-r-full px-8 text-base font-semibold">
+              <button onClick={() => router.push(`/search?q=${search}`)} className="btn bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none join-item rounded-r-full px-8 text-base font-semibold">
                 Search
               </button>
             </div>

@@ -1,28 +1,21 @@
 "use client"
-import { useState, useEffect } from "react"
+import useSWR from "swr";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-
+import { useRouter } from "next/navigation";
+const fetcher = (url) => fetch(url).then((r) => r.json())
 export default function Latest() {
-    const [books, setBooks] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const router = useRouter()
 
-    useEffect(() => {
-        fetch("https://www.dbooks.org/api/recent")
-            .then((res) => res.json())
-            .then((data) => {
-                setBooks(data)
-                setLoading(false)
-            })
-            .catch((err) => {
-                setError(err)
-                setLoading(false)
-            })
-    }, [])
-
+    const { data, error, isLoading } = useSWR(
+    'https://www.dbooks.org/api/recent',
+    fetcher
+  )
+//    if (isLoading) return <div>Loading...</div>
+//   if (error) return <div>Error: {error.message}</div>
+    
     return (
-        <div className="py-20 bg-base-200/50">
+        <div className="py-20 bg-base-200/50 min-h-screen">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
@@ -35,7 +28,7 @@ export default function Latest() {
                 </div>
 
                 {/* Content */}
-                {loading ? (
+                {isLoading ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                         {[...Array(5)].map((_, i) => (
                             <div key={i} className="flex flex-col gap-4">
@@ -62,7 +55,7 @@ export default function Latest() {
                         grabCursor={true}
                         className="w-full py-4 px-2"
                     >
-                        {books.books?.slice(0, 10).map((book) => (
+                        {data.books?.slice(0, 10).map((book) => (
                             <SwiperSlide key={book.id}>
                                 <div className="group relative flex flex-col gap-3 h-full">
                                     <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-base-100 shadow-md transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
@@ -87,7 +80,7 @@ export default function Latest() {
                                         <p className="text-sm text-base-content/60 line-clamp-1">
                                             by {book.authors}
                                         </p>
-                                        <button className="btn btn-sm bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none font-bold rounded-full px-6">Read Now</button>
+                                        <button onClick={() => router.push(`/books/detail/${book.id}`)} className="btn btn-sm bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none font-bold rounded-full px-6">Read Now</button>
                                     </div>
                                 </div>
                             </SwiperSlide>

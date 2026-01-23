@@ -22,7 +22,7 @@ export default function SearchResult() {
             setLoading(true)
             try {
                 
-                const response = await fetch(`https://www.dbooks.org/api/search/${decodeURIComponent(query)}`)
+                const response = await fetch(`/api/books/search?q=${decodeURIComponent(query)}`)
                 const data = await response.json()
                 // The API usually returns { status: "ok", books: [...] }
                 setBooks(data.books || [])
@@ -112,8 +112,9 @@ export default function SearchResult() {
                                             {book.title}
                                         </h3>
                                         <p className="text-sm text-base-content/60 line-clamp-1">
-                                            by {book.authors}
+                                            {book.authors? `by ${book.authors}`  : ""}
                                         </p>
+                                        <Link href={`/books/detail/${book.slug}`} className="btn bg-[#FFBF00] border-none text-black hover:bg-[#e6ac00] rounded-full px-6 font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Read Books</Link>
                                     </div>
                                 </div>
                             ))}

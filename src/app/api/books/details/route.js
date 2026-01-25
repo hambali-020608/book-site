@@ -8,6 +8,7 @@ export async function GET(request) {
   if(source === 'dbooks'){
     const data = await fetch(`https://www.dbooks.org/api/book/${slug}`)
     const book = await data.json()
+
     return Response.json({ book });
   }
   
@@ -30,8 +31,8 @@ export async function GET(request) {
       year: bookData.info.year,
       pages: bookData.info.pages,
       description: bookData.info.description,
-      downloadUrl: bookData.info.downloadUrl,
-      source: bookData.info.source,
+      url: bookData.downloadLinks,
+      source: "freeCom",
       type: bookData.info.type
     }
     

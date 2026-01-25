@@ -1,3 +1,5 @@
+import ReadButton from "./ReadButton";
+
 export default function CardDetail({ book }) {
 
     return (
@@ -7,6 +9,7 @@ export default function CardDetail({ book }) {
 
           {/* Left Column: Book Cover */}
           <div className="">
+            {console.log(book)}
           
             <div className="hover-3d">
   {/* content */}
@@ -68,10 +71,8 @@ export default function CardDetail({ book }) {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-2 animate-in fade-in slide-in-from-bottom-2 delay-500 duration-700">
-              <a href={book.url} target="_blank" rel="noopener noreferrer" className="btn bg-[#FFBF00] btn-lg h-14 px-8 rounded-full text-lg shadow-lg shadow-[#FFBF00]/20 hover:shadow-[#FFBF00]/40 transition-all hover:scale-105 active:scale-95">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
-                Read Now
-              </a>
+              <ReadButton url={book.url} isDropdown={book.source === 'freeCom' ? true : false} />
+             
               {/* <a href={book.download} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg h-14 px-8 rounded-full text-lg border-base-content/20 hover:bg-base-content/5 hover:border-base-content transition-all hover:scale-105 active:scale-95">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg>
                 Download

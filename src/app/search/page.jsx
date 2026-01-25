@@ -52,6 +52,7 @@ export default function SearchResult() {
     return (
         <div className="min-h-screen bg-base-100 pb-20">
             <Navbar />
+            {/* {console.log(books)} */}
 
             <main className="max-w-7xl mx-auto px-6 lg:px-8 pt-10 mt-10">
                 {/* Header Section */}
@@ -114,7 +115,7 @@ export default function SearchResult() {
                                         <p className="text-sm text-base-content/60 line-clamp-1">
                                             {book.authors? `by ${book.authors}`  : ""}
                                         </p>
-                                        <Link href={`/books/detail/${book.slug}`} className="btn bg-[#FFBF00] border-none text-black hover:bg-[#e6ac00] rounded-full px-6 font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Read Books</Link>
+                                        <Link href={`/books/detail/${book.slug}/${book.source}`} className="btn bg-[#FFBF00] border-none text-black hover:bg-[#e6ac00] rounded-full px-6 font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Read Books</Link>
                                     </div>
                                 </div>
                             ))}

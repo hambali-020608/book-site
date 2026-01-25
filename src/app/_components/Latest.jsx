@@ -80,7 +80,7 @@ export default function Latest() {
                                         <p className="text-sm text-base-content/60 line-clamp-1">
                                             by {book.authors}
                                         </p>
-                                        <button onClick={() => router.push(`/books/detail/${book.id}`)} className="btn btn-sm bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none font-bold rounded-full px-6">Read Now</button>
+                                        <button onClick={() => router.push(`/books/detail/${book.id}/dbooks`)} className="btn btn-sm bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none font-bold rounded-full px-6">Read Now</button>
                                     </div>
                                 </div>
                             </SwiperSlide>

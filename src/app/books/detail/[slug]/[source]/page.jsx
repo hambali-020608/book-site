@@ -6,7 +6,7 @@ import CardDetail from "@/app/_components/CardDetail"
 export default async function BookDetailPage({ params }) {
   const { slug } = await params
   const {source} = await params
-  const data = await fetch(`http://localhost:3001/api/books/details?slug=${slug}&source=${source}`)
+  const data = await fetch(`http://localhost:3000/api/books/details?slug=${slug}&source=${source}`)
   const book = await data.json()
   console.log(book)
 

@@ -13,7 +13,7 @@ export default function Hero() {
         {/* Right Content: Image & 3D Effect */}
         <div className="hover-3d relative z-10">
           <figure className="max-w-sm lg:max-w-md xl:max-w-lg drop-shadow-2xl">
-            <img src="/img/book3.png" alt="Book Treasure 3D" className="w-full h-auto object-contain" />
+            <img src="/img/book3.png" alt="Book Treasure 3D" className="w-96 h-auto object-contain" />
           </figure>
           {/* Preserving 3D effect layers */}
           <div></div><div></div><div></div><div></div>
@@ -22,7 +22,7 @@ export default function Hero() {
 
         {/* Left Content: Text & CTA */}
         <div className="flex-1 text-center lg:text-left">
-          <h1 className="text-5xl lg:text-7xl font-extrabold text-base-content leading-tight tracking-tight mb-6">
+          <h1 className="text-5xl lg:text-5xl font-extrabold text-base-content leading-tight tracking-tight ">
             BOOKS ARE THE <br className="hidden lg:block" />
             <span className="text-[#FFBF00]">REAL TREASURE</span>
           </h1>

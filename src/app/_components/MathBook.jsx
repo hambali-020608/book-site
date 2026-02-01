@@ -6,18 +6,17 @@ import { useRouter } from "next/navigation";
 import CardBook from "./CardBook";
 import { useState } from "react";
 const fetcher = (url) => fetch(url).then((r) => r.json())
-export default function ComScienceBook() {
+export default function MathBook() {
     const router = useRouter()
     
     const{data:subject,error:errorSubject,isLoading:isLoadingSubject} = useSWR(
-        'https://ebook-scraper.vercel.app/api/books/v1/subcategory?categoryPath=compscCategory.html',
+        'https://ebook-scraper.vercel.app/api/books/v1/subcategory?categoryPath=mathCategory.html',
         fetcher
     )
 
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedCategoryName,setSelectedCategoryName] = useState(null);
     const { data:books, error, isLoading } = useSWR(
-    `https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=${selectedCategory ? selectedCategory : '/compscAlgorithmBooks.html'}`,
+    `https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=${selectedCategory ? selectedCategory : '/mathAlgebraBooks.html'}`,
     fetcher
   )
 //    if (isLoading) return <div>Loading...</div>
@@ -35,10 +34,10 @@ export default function ComScienceBook() {
                         <div className="flex justify-between ">
                            
                         <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">
-                        Computer Science<span className="text-[#FFBF00]"> Books</span>
+                        Mathematics<span className="text-[#FFBF00]"> Books</span>
                         </h2>
      <div className="dropdown dropdown-end">
-  <div tabIndex={0} role="button" className="btn m-1">{selectedCategory ? selectedCategoryName : 'Category'}</div>
+  <div tabIndex={0} role="button" className="btn m-1">Category </div>
   
  
   <ul 
@@ -47,7 +46,7 @@ export default function ComScienceBook() {
   >
     {subject?.map((item, index) => (
       <li key={index}>
-        <button onClick={()=>{setSelectedCategory(item.subCategoryUrl),setSelectedCategoryName(item.subject)}}>{item.subject}</button>
+        <button onClick={()=>setSelectedCategory(item.subCategoryUrl)}>{item.subject}</button>
       </li>
     ))}
   </ul>

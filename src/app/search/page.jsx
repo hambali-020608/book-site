@@ -4,9 +4,9 @@ import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import Navbar from "../_components/Navbar"
 import Link from "next/link"
-
-export default function SearchResult() {
-    const [books, setBooks] = useState([])
+import { Suspense } from "react"
+function SearchResultContent() {
+     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const searchParams = useSearchParams()
@@ -50,6 +50,7 @@ export default function SearchResult() {
     }
 
     return (
+        
         <div className="min-h-screen bg-base-100 pb-20">
             <Navbar />
             {/* {console.log(books)} */}
@@ -197,4 +198,14 @@ export default function SearchResult() {
             </main>
         </div>
     )
+    
+}
+
+export default function SearchResult() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SearchResultContent />
+        </Suspense>
+    )
+   
 }

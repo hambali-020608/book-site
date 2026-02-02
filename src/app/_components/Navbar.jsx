@@ -1,7 +1,14 @@
+
+import { BookOpen } from "lucide-react"
 export default function Navbar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-base-100/80 backdrop-blur-md border-b border-base-content/10">
       <div className="navbar max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex-none">
+    <button className="btn btn-square btn-ghost">
+           <BookOpen className="w-6 h-6 text-[#FFBF00]" />
+    </button>
+  </div>
         <div className="flex-1">
           <a className="text-2xl font-bold tracking-tighter cursor-pointer hover:opacity-80 transition-opacity">
             Vidya<span className="text-[#FFBF00]">Hub</span>
@@ -15,9 +22,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="flex-none ml-4">
-          <a className="btn btn-sm bg-[#FFBF00] hover:bg-[#e6ac00] text-black border-none font-bold rounded-full px-6">
-            Sign In
-          </a>
+          
         </div>
       </div>
     </div>

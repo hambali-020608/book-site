@@ -18,7 +18,7 @@ export async function GET(request) {
       pages: bookData.pages,
       description: bookData.description,
       url: bookData.download,
-      source: "dbooks",x  
+      source: "dbooks",
       // type: bookData.type
     }
 

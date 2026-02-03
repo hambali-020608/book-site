@@ -6,7 +6,8 @@ import CardDetail from "@/app/_components/CardDetail"
 export default async function BookDetailPage({ params }) {
   const { slug } = await params
   const {source} = await params
-  const data = await fetch(`http://localhost:3000/api/books/details?slug=${slug}&source=${source}`)
+  const isLocal = process.env.NODE_ENV === 'development'
+  const data = await fetch(`${isLocal ? 'http://localhost:3000' : 'https://vidya-hub.vercel.app'}/api/books/details?slug=${slug}&source=${source}`)
   const book = await data.json()
   console.log(book)
 

@@ -12,10 +12,14 @@ import { Search, Filter, Grid, List, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ListViewBook from '../_components/ListViewBook';
+import MathBook from './_components/MathBook';
+import ComScience from './_components/ComScience';
+import DataScience from './_components/DataScience';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Library() {
+    const [isLoadMore,setIsLoadMore] = useState(false);
     const router = useRouter();
     const { data, error, isLoading } = useSWR('https://www.dbooks.org/api/recent', fetcher);
     const { data: mathData, error: mathError, isLoading: mathIsLoading } = useSWR('https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=/mathAlgebraBooks.html', fetcher);
@@ -142,38 +146,9 @@ export default function Library() {
                         </>
                     )
                 )}
-                <div className='mt-10'>
-                    <div className="flex flex-wrap items-end justify-between gap-4 mb-8 border-b border-base-content/10 pb-4">
-                        <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">
-                            Mathematics<span className="text-[#FFBF00]"> Books</span>
-                        </h2>
-                        <Link href="/library/mathematics" className="group flex items-center gap-2 pb-1">
-                            <span className="text-sm font-semibold uppercase tracking-wider opacity-70 group-hover:opacity-100 group-hover:text-[#FFBF00] transition-all">See All</span>
-                            <div className="flex items-center justify-center w-8 h-8 rounded-full border border-base-content/20 bg-transparent group-hover:bg-[#FFBF00] group-hover:border-[#FFBF00] group-hover:text-black transition-all">
-                                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:-rotate-45" />
-                            </div>
-                        </Link>
-                    </div>
-                    <Swiper
-                        spaceBetween={20}
-                        slidesPerView={2}
-                        breakpoints={{
-                            640: { slidesPerView: 2 },
-                            768: { slidesPerView: 3 },
-                            1024: { slidesPerView: 4 },
-                            1280: { slidesPerView: 5 },
-                        }}
-                        grabCursor={true}
-                        className="w-full py-4 px-2"
-                    >
-                        {mathData?.slice(0, 10).map((book) => (
-                            <SwiperSlide key={book.id}>
-
-                                <CardBook title={book.title} image={book.imgUrl} slug={book.detailUrl} source="freeCom" />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
+                <MathBook/>
+                <ComScience/>
+                <DataScience/>
             </main>
 
             <Footer />

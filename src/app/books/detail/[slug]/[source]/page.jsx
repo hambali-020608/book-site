@@ -9,7 +9,7 @@ export default async function BookDetailPage({ params }) {
   const isLocal = process.env.NODE_ENV === 'development'
   const data = await fetch(`${isLocal ? 'http://localhost:3000' : 'https://vidya-hub.vercel.app'}/api/books/details?slug=${slug}&source=${source}`)
   const book = await data.json()
-  console.log(book)
+  
 
   return (
     <div className="min-h-screen bg-base-100 pb-20 font-sans selection:bg-primary selection:text-primary-content">

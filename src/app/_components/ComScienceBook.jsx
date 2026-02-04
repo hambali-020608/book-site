@@ -52,7 +52,6 @@ export default function ComScienceBook() {
     ))}
   </ul>
 </div>
-{console.log(selectedCategory)}
 
                         </div>
                         <p className="mt-2 text-base-content/60">Discover the latest additions to our curated library.</p>
@@ -90,7 +89,7 @@ export default function ComScienceBook() {
                         {books?.slice(0, 10).map((book) => (
                             <SwiperSlide key={book.id}>
 
-                                <CardBook title={book.title} image={book.imgUrl} authors={book.authors} slug={book.id} source="dbooks" />
+                                <CardBook title={book.title} image={book.imgUrl} authors={book.authors} slug={book.detailUrl} source="freeCom" />
                             </SwiperSlide>
                         ))}
                     </Swiper>

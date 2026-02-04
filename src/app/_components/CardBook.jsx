@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-export default function CardBook({ title, image, authors, slug, source }) {
+export default function   CardBook({ title, image, authors, slug, source }) {
   const router = useRouter()
   return (
     <div className="group relative flex flex-col gap-3 h-full">

@@ -40,7 +40,7 @@ export default function CardDetail({ book }) {
                 {/* {book.status && <span className="badge badge-lg badge-primary badge-outline px-4">{book.status}</span>} */}
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-base-content animate-in fade-in slide-in-from-bottom-2 delay-150 duration-700">
+              <h1 className="text-4xl   md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-base-content animate-in fade-in slide-in-from-bottom-2 delay-150 duration-700">
                 {book.title}
               </h1>
               <p className="text-xl md:text-2xl text-base-content/60 font-medium leading-relaxed animate-in fade-in slide-in-from-bottom-2 delay-200 duration-700">

@@ -1,4 +1,7 @@
 "use client";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
 
 import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
@@ -8,12 +11,14 @@ import { useState } from "react";
 import { Search, Filter, Grid, List, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import ListViewBook from '../_components/ListViewBook';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Library() {
     const router = useRouter();
     const { data, error, isLoading } = useSWR('https://www.dbooks.org/api/recent', fetcher);
+    const { data: mathData, error: mathError, isLoading: mathIsLoading } = useSWR('', fetcher);
     const [viewMode, setViewMode] = useState("grid");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -69,9 +74,7 @@ export default function Library() {
                             <Filter className="w-4 h-4" />
                             Filter
                         </button>
-                        <div className="hidden sm:flex text-sm text-base-content/60">
-                            Showing {data?.books?.length || 0} books
-                        </div>
+                     
                     </div>
 
                     <div className="join">
@@ -108,41 +111,79 @@ export default function Library() {
                         <span>Error loading library content. Please try again.</span>
                     </div>
                 ) : (
-                    <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' : 'grid-cols-1 gap-4'}`}>
-                        {data?.books?.map((book) => (
-                            <div key={book.id} className={viewMode === 'list' ? 'col-span-full' : ''}>
-                                {viewMode === 'grid' ? (
-                                    <CardBook
-                                        title={book.title}
-                                        image={book.image}
-                                        authors={book.authors}
-                                        slug={book.id}
-                                        source="dbooks"
-                                    />
-                                ) : (
-                                    // List View Item
-                                    <div className="flex gap-4 p-4 rounded-xl bg-base-200 hover:bg-base-300 transition-colors group cursor-pointer" onClick={() => router.push(`/books/detail/${book.id}/dbooks`)}>
-                                        <div className="w-24 h-32 flex-shrink-0 overflow-hidden rounded-lg">
-                                            <img src={book.image} alt={book.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                        </div>
-                                        <div className="flex flex-col justify-center flex-grow">
-                                            <h3 className="text-xl font-bold group-hover:text-[#FFBF00] transition-colors">{book.title}</h3>
-                                            <p className="text-base-content/60">{book.authors}</p>
-                                            <div className="mt-2">
-                                                <span className="badge badge-outline">Book</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center px-4">
-                                            <button className="btn bg-[#FFBF00] border-none text-black hover:bg-[#e6ac00] btn-sm rounded-full">
-                                                Read
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                    viewMode == "grid" ? (
+                        <>
+                         <Swiper
+                                                spaceBetween={20}
+                                                slidesPerView={2}
+                                                breakpoints={{
+                                                    640: { slidesPerView: 2 },
+                                                    768: { slidesPerView: 3 },
+                                                    1024: { slidesPerView: 4 },
+                                                    1280: { slidesPerView: 5 },
+                                                }}
+                                                grabCursor={true}
+                                                className="w-full py-4 px-2"
+                                            >
+                                                {data?.books?.slice(0, 10).map((book) => (
+                                                    <SwiperSlide key={book.id}>
+                        
+                                                        <CardBook title={book.title} image={book.image} authors={book.authors} slug={book.id} source="dbooks" />
+                                                    </SwiperSlide>
+                                                ))}
+                                            </Swiper>
+                        </>
+                        
+                    ) : (
+                        <>
+                        {data?.books?.slice(0, 10).map((book) => (
+                            <ListViewBook key={book.id} book={book} />
                         ))}
-                    </div>
+                        </>
+                    )
+                    // <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' : 'grid-cols-1 gap-4'}`}>
+                        
+                    //     {data?.books?.map((book) => (
+                    //         <div key={book.id} className={viewMode === 'list' ? 'col-span-full' : ''}>
+                    //             {viewMode === 'grid' ? (
+                                    
+                    //                 <CardBook
+                    //                     title={book.title}
+                    //                     image={book.image}
+                    //                     authors={book.authors}
+                    //                     slug={book.id}
+                    //                     source="dbooks"
+                    //                 />
+                    //             ) : (
+                    //                 // List View Item
+                    //                <ListViewBook book={book} />
+                    //             )}
+                    //         </div>
+                    //     ))}
+                    // </div>
                 )}
+                <div>
+                    <h1>Mathematics</h1>
+                    <Swiper
+                                                spaceBetween={20}
+                                                slidesPerView={2}
+                                                breakpoints={{
+                                                    640: { slidesPerView: 2 },
+                                                    768: { slidesPerView: 3 },
+                                                    1024: { slidesPerView: 4 },
+                                                    1280: { slidesPerView: 5 },
+                                                }}
+                                                grabCursor={true}
+                                                className="w-full py-4 px-2"
+                                            >
+                                                {data?.books?.slice(0, 10).map((book) => (
+                                                    <SwiperSlide key={book.id}>
+                        
+                                                        <CardBook title={book.title} image={book.image} authors={book.authors} slug={book.id} source="dbooks" />
+                                                    </SwiperSlide>
+                                                ))}
+                                            </Swiper>
+                </div>
             </main>
 
             <Footer />

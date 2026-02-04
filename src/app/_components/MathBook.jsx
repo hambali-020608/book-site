@@ -26,8 +26,6 @@ export default function MathBook() {
         <section className="py-20 bg-base-200/50 min-h-screen">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-                {console.log(subject)}
-                {console.log(books)}
                 {/* Section Header */}
                 <div className="mb-12">
                     <div className="text-center md:text-left ">
@@ -51,7 +49,7 @@ export default function MathBook() {
     ))}
   </ul>
 </div>
-{console.log(selectedCategory)}
+
 
                         </div>
                         <p className="mt-2 text-base-content/60">Discover the latest additions to our curated library.</p>
@@ -89,7 +87,7 @@ export default function MathBook() {
                         {books?.slice(0, 10).map((book) => (
                             <SwiperSlide key={book.id}>
 
-                                <CardBook title={book.title} image={book.imgUrl} authors={book.authors} slug={book.id} source="dbooks" />
+                                <CardBook title={book.title} image={book.imgUrl} authors={book.authors} slug={book.id} source="freeCom" />
                             </SwiperSlide>
                         ))}
                     </Swiper>

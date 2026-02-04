@@ -8,7 +8,7 @@ import Footer from "../_components/Footer";
 import CardBook from "../_components/CardBook";
 import useSWR from "swr";
 import { useState } from "react";
-import { Search, Filter, Grid, List, BookOpen } from "lucide-react";
+import { Search, Filter, Grid, List, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ListViewBook from '../_components/ListViewBook';
@@ -18,7 +18,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 export default function Library() {
     const router = useRouter();
     const { data, error, isLoading } = useSWR('https://www.dbooks.org/api/recent', fetcher);
-    const { data: mathData, error: mathError, isLoading: mathIsLoading } = useSWR('', fetcher);
+    const { data: mathData, error: mathError, isLoading: mathIsLoading } = useSWR('https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=/mathAlgebraBooks.html', fetcher);
     const [viewMode, setViewMode] = useState("grid");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -38,7 +38,7 @@ export default function Library() {
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                         <div>
-                            
+
                             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight">
                                 Library <span className="text-[#FFBF00]">collection</span>
                             </h1>
@@ -74,7 +74,7 @@ export default function Library() {
                             <Filter className="w-4 h-4" />
                             Filter
                         </button>
-                     
+
                     </div>
 
                     <div className="join">
@@ -113,76 +113,66 @@ export default function Library() {
                 ) : (
                     viewMode == "grid" ? (
                         <>
-                         <Swiper
-                                                spaceBetween={20}
-                                                slidesPerView={2}
-                                                breakpoints={{
-                                                    640: { slidesPerView: 2 },
-                                                    768: { slidesPerView: 3 },
-                                                    1024: { slidesPerView: 4 },
-                                                    1280: { slidesPerView: 5 },
-                                                }}
-                                                grabCursor={true}
-                                                className="w-full py-4 px-2"
-                                            >
-                                                {data?.books?.slice(0, 10).map((book) => (
-                                                    <SwiperSlide key={book.id}>
-                        
-                                                        <CardBook title={book.title} image={book.image} authors={book.authors} slug={book.id} source="dbooks" />
-                                                    </SwiperSlide>
-                                                ))}
-                                            </Swiper>
+                            <Swiper
+                                spaceBetween={20}
+                                slidesPerView={2}
+                                breakpoints={{
+                                    640: { slidesPerView: 2 },
+                                    768: { slidesPerView: 3 },
+                                    1024: { slidesPerView: 4 },
+                                    1280: { slidesPerView: 5 },
+                                }}
+                                grabCursor={true}
+                                className="w-full py-4 px-2"
+                            >
+                                {data?.books?.slice(0, 10).map((book) => (
+                                    <SwiperSlide key={book.id}>
+
+                                        <CardBook title={book.title} image={book.image} authors={book.authors} slug={book.id} source="f" />
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
                         </>
-                        
+
                     ) : (
                         <>
-                        {data?.books?.slice(0, 10).map((book) => (
-                            <ListViewBook key={book.id} book={book} />
-                        ))}
+                            {data?.books?.slice(0, 10).map((book) => (
+                                <ListViewBook key={book.id} book={book} />
+                            ))}
                         </>
                     )
-                    // <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' : 'grid-cols-1 gap-4'}`}>
-                        
-                    //     {data?.books?.map((book) => (
-                    //         <div key={book.id} className={viewMode === 'list' ? 'col-span-full' : ''}>
-                    //             {viewMode === 'grid' ? (
-                                    
-                    //                 <CardBook
-                    //                     title={book.title}
-                    //                     image={book.image}
-                    //                     authors={book.authors}
-                    //                     slug={book.id}
-                    //                     source="dbooks"
-                    //                 />
-                    //             ) : (
-                    //                 // List View Item
-                    //                <ListViewBook book={book} />
-                    //             )}
-                    //         </div>
-                    //     ))}
-                    // </div>
                 )}
-                <div>
-                    <h1>Mathematics</h1>
+                <div className='mt-10'>
+                    <div className="flex flex-wrap items-end justify-between gap-4 mb-8 border-b border-base-content/10 pb-4">
+                        <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">
+                            Mathematics<span className="text-[#FFBF00]"> Books</span>
+                        </h2>
+                        <Link href="/library/mathematics" className="group flex items-center gap-2 pb-1">
+                            <span className="text-sm font-semibold uppercase tracking-wider opacity-70 group-hover:opacity-100 group-hover:text-[#FFBF00] transition-all">See All</span>
+                            <div className="flex items-center justify-center w-8 h-8 rounded-full border border-base-content/20 bg-transparent group-hover:bg-[#FFBF00] group-hover:border-[#FFBF00] group-hover:text-black transition-all">
+                                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:-rotate-45" />
+                            </div>
+                        </Link>
+                    </div>
                     <Swiper
-                                                spaceBetween={20}
-                                                slidesPerView={2}
-                                                breakpoints={{
-                                                    640: { slidesPerView: 2 },
-                                                    768: { slidesPerView: 3 },
-                                                    1024: { slidesPerView: 4 },
-                                                    1280: { slidesPerView: 5 },
-                                                }}
-                                                grabCursor={true}
-                                                className="w-full py-4 px-2"
-                                            >
-                                                {data?.books?.slice(0, 10).map((book) => (
-                                                    <SwiperSlide key={book.id}>
-                        
-                                                        <CardBook title={book.title} image={book.image} authors={book.authors} slug={book.id} source="dbooks" />
-                                                    </SwiperSlide>
-                                                ))}
-                                            </Swiper>
+                        spaceBetween={20}
+                        slidesPerView={2}
+                        breakpoints={{
+                            640: { slidesPerView: 2 },
+                            768: { slidesPerView: 3 },
+                            1024: { slidesPerView: 4 },
+                            1280: { slidesPerView: 5 },
+                        }}
+                        grabCursor={true}
+                        className="w-full py-4 px-2"
+                    >
+                        {mathData?.slice(0, 10).map((book) => (
+                            <SwiperSlide key={book.id}>
+
+                                <CardBook title={book.title} image={book.imgUrl} slug={book.detailUrl} source="freeCom" />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
             </main>
 

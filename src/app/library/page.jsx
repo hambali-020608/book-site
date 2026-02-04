@@ -146,10 +146,37 @@ export default function Library() {
                         </>
                     )
                 )}
+
+
                 <MathBook/>
-                <ComScience/>
-                <DataScience/>
+                
+
+                {
+
+isLoadMore && (
+    <>
+     <ComScience/>
+     <DataScience/>
+    </>
+)
+
+                
+                }
+                <div className='flex justify-center '>
+                    <button onClick={() => setIsLoadMore(!isLoadMore)} className="mt-10 btn bg-[#FFBF00] border-none text-black hover:bg-[#e6ac00] rounded-full px-6 font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                                {
+                                                    isLoadMore ? "Load Less" : "Load More"
+                                                }
+                                                </button>
+
+                </div>
+                 
             </main>
+        
+                    <div className="flex justify-center items-center">
+                       
+                    </div>
+            
 
             <Footer />
         </div>

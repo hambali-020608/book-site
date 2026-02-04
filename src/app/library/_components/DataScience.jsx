@@ -9,7 +9,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 import useSWR from "swr";
 
 export default function DataScience() {
-    const { data: ComScienceData, error: ComScienceError, isLoading: ComScienceIsLoading } = useSWR('https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=/compscAlgorithmBooks.html', fetcher);
+    const { data: ComScienceData, error: ComScienceError, isLoading: ComScienceIsLoading } = useSWR('https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=/dbAnalysisMiningBooks.html', fetcher);
     return (
        <div className='mt-10'>
                     <div className="flex flex-wrap items-end justify-between gap-4 mb-8 border-b border-base-content/10 pb-4">
@@ -36,6 +36,7 @@ export default function DataScience() {
                         className="w-full py-4 px-2"
                     >
                         {ComScienceData?.slice(0, 10).map((book) => (
+
                             <SwiperSlide key={book.id}>
 
                                 <CardBook title={book.title} image={book.imgUrl} slug={book.detailUrl} source="freeCom" />

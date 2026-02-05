@@ -22,7 +22,7 @@ export default function Library() {
     const [isLoadMore,setIsLoadMore] = useState(false);
     const router = useRouter();
     const { data, error, isLoading } = useSWR('https://www.dbooks.org/api/recent', fetcher);
-    const { data: mathData, error: mathError, isLoading: mathIsLoading } = useSWR('https://ebook-scraper.vercel.app/api/books/v1/get-books?subCategoryPath=/mathAlgebraBooks.html', fetcher);
+    const {data:categoryData,error:categoryError,isLoading:categoryIsLoading} = useSWR('https://ebook-scraper.vercel.app/api/books/v1/all-category', fetcher);
     const [viewMode, setViewMode] = useState("grid");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -51,6 +51,7 @@ export default function Library() {
                             </p>
                         </div>
 
+{/* {console.log("category Data",categoryData)} */}
                         {/* Search Widget */}
                         <form onSubmit={handleSearch} className="w-full md:w-auto min-w-[300px]">
                             <div className="relative group">
@@ -69,15 +70,32 @@ export default function Library() {
                     </div>
                 </div>
             </div>
-
             {/* Toolbar */}
             <div className="border-b border-base-300 bg-base-100 sticky top-[64px] z-30 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <button className="btn btn-sm btn-ghost gap-2">
-                            <Filter className="w-4 h-4" />
-                            Filter
-                        </button>
+                         <div className="dropdown dropdown-bottom">
+                            {console.log(categoryData)}
+ <div tabIndex={0} role="button" className="btn m-1">
+    <Filter className="w-4 h-4" />
+    Category </div>
+  
+ 
+  <ul 
+    tabIndex={0} 
+    className="dropdown-content menu p-2 shadow-sm bg-base-100 rounded-box z-[50] w-52 h-96 overflow-y-auto flex-nowrap"
+  >
+    {categoryData?.map((item, index) => (
+      <li key={index}>
+        <button onClick={()=>setSelectedCategory(item.categoryUrl)}>{item.subject}</button>
+      </li>
+    ))}
+  </ul>
+
+</div>
+                      
+                       
+
 
                     </div>
 
@@ -146,21 +164,14 @@ export default function Library() {
                         </>
                     )
                 )}
-
-
                 <MathBook/>
-                
-
                 {
-
 isLoadMore && (
     <>
      <ComScience/>
      <DataScience/>
     </>
 )
-
-                
                 }
                 <div className='flex justify-center '>
                     <button onClick={() => setIsLoadMore(!isLoadMore)} className="mt-10 btn bg-[#FFBF00] border-none text-black hover:bg-[#e6ac00] rounded-full px-6 font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -168,16 +179,9 @@ isLoadMore && (
                                                     isLoadMore ? "Load Less" : "Load More"
                                                 }
                                                 </button>
-
                 </div>
                  
             </main>
-        
-                    <div className="flex justify-center items-center">
-                       
-                    </div>
-            
-
             <Footer />
         </div>
     );

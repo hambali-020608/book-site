@@ -3,29 +3,30 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 
-import Navbar from "../_components/Navbar";
-import Footer from "../_components/Footer";
-import CardBook from "../_components/CardBook";
+import Navbar from "../../_components/Navbar";
+import Footer from "../../_components/Footer";
+import CardBook from "../../_components/CardBook";
 import useSWR from "swr";
 import { useState } from "react";
 import { Search, Filter, Grid, List, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import ListViewBook from '../_components/ListViewBook';
-import MathBook from './_components/MathBook';
-import ComScience from './_components/ComScience';
-import DataScience from './_components/DataScience';
+import ListViewBook from '../../_components/ListViewBook';
+import MathBook from '../_components/MathBook';
+import ComScience from '../_components/ComScience';
+import DataScience from '../_components/DataScience';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Library() {
     const [isLoadMore,setIsLoadMore] = useState(false);
     const router = useRouter();
+    const isLocal = process.env.NODE_ENV === 'development'
     const { data, error, isLoading } = useSWR('https://www.dbooks.org/api/recent', fetcher);
-    const {data:categoryData,error:categoryError,isLoading:categoryIsLoading} = useSWR('https://ebook-scraper.vercel.app/api/books/v1/all-category', fetcher);
+    const {data:categoryData,error:categoryError,isLoading:categoryIsLoading} = useSWR(` ${isLocal ? 'http://localhost:5000' : 'https://ebook-scraper.vercel.app'}/api/books/v1/all-category`, fetcher);
     const [viewMode, setViewMode] = useState("grid");
     const [searchQuery, setSearchQuery] = useState("");
-
+    // console.log(categoryData)
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchQuery.trim()) {
@@ -75,10 +76,10 @@ export default function Library() {
                 <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                          <div className="dropdown dropdown-bottom">
-                            {console.log(categoryData)}
  <div tabIndex={0} role="button" className="btn m-1">
     <Filter className="w-4 h-4" />
     Category </div>
+  
   
  
   <ul 
@@ -93,10 +94,6 @@ export default function Library() {
   </ul>
 
 </div>
-                      
-                       
-
-
                     </div>
 
                     <div className="join">
@@ -118,7 +115,25 @@ export default function Library() {
 
             {/* Main Content */}
             <main className="flex-grow max-w-7xl mx-auto px-6 lg:px-8 py-12 w-full">
-                {isLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {categoryData?.map((item, index) => (
+                        <div className="card bg-base-100 image-full w-96 shadow-sm">
+                            <figure>
+                                <img
+                                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                                    alt="Shoes" />
+                            </figure>
+                            <div className="card-body justify-center align-center">
+                                <h2 className="card-title justify-center">{item.subject}</h2>
+                                <div className="card-actions justify-center">
+                                    {console.log("categoryUrl", item)}
+                                    <Link href={`/library/${item.slug}`} className="btn bg-[#FFBF00]">View Books</Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/* {isLoading ? (
                     <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' : 'grid-cols-1'}`}>
                         {[...Array(10)].map((_, i) => (
                             <div key={i} className="flex flex-col gap-4">
@@ -179,7 +194,7 @@ isLoadMore && (
                                                     isLoadMore ? "Load Less" : "Load More"
                                                 }
                                                 </button>
-                </div>
+                </div> */}
                  
             </main>
             <Footer />
